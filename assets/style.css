@@ -146,19 +146,16 @@
     filter: brightness(0) saturate(100%) !important;
     opacity: 0.85;
 
-    transform: translateZ(0) scale(1);
+    transform: translateZ(0);
     transform-origin: center;
-    transition:
-      filter 200ms ease,
-      opacity 200ms ease,
-      transform 200ms ease;
+    transition: filter 200ms ease, opacity 200ms ease, transform 200ms ease;
   }
 
   .logo-wall:hover {
-    /* hover: Originalfarben + leichte Vergrößerung */
+    /* hover: Originalfarben wieder zeigen */
     filter: none !important;
     opacity: 1;
-    transform: translateZ(0) scale(1.06);
+    transform: translateZ(0) scale(1.02);
   }
 
   /* =========================================================
