@@ -26,7 +26,33 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      max-height: 25vh !important;
+
+      /* iOS Safari fix: enforce real height, not only max-height */
+      height: 25vh;
+      max-height: 25vh;
+    }
+
+    /* Prevent Webflow embed from collapsing */
+    .lottie-container-customcode .w-embed {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 0;
+    }
+
+    /* Wrapper uses parent height, width via aspect-ratio */
+    .lottie-container-customcode .lottie-wrapper {
+      height: 100%;
+      width: auto;
+      max-width: 100%;
+    }
+
+    /* Lottie container fills wrapper */
+    .lottie-container-customcode .lottie-container {
+      width: 100%;
+      height: 100%;
     }
   }
 
