@@ -350,13 +350,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // If nothing set, remove transform to avoid fighting other styles
         if (!mode) {
-          img.style.transform = '';
+          img.style.removeProperty('transform');
           return;
         }
 
-        if (mode === 'horizontal') img.style.transform = 'scaleX(-1)';
-        else if (mode === 'vertical') img.style.transform = 'scaleY(-1)';
-        else if (mode === 'both') img.style.transform = 'scale(-1, -1)';
+        if (mode === 'horizontal') img.style.setProperty('transform', 'scaleX(-1)', 'important');
+        else if (mode === 'vertical') img.style.setProperty('transform', 'scaleY(-1)', 'important');
+        else if (mode === 'both') img.style.setProperty('transform', 'scale(-1, -1)', 'important');
       }
 
       // -------- Main --------
@@ -376,7 +376,8 @@ document.addEventListener("DOMContentLoaded", () => {
           // 2) object-fit
           if (fit && fit !== '' && fit.indexOf('{') === -1) {
             if (['fill', 'contain', 'cover', 'none', 'scale-down'].indexOf(fit) !== -1) {
-              img.style.objectFit = fit;
+              // Use !important so Webflow variant CSS cannot override
+              img.style.setProperty('object-fit', fit, 'important');
             }
           }
 
@@ -386,7 +387,8 @@ document.addEventListener("DOMContentLoaded", () => {
           // 4) object-position (mirror it when flipped, so the VISUAL position stays the same)
           if (position && position !== '' && position.indexOf('{') === -1) {
             const finalPos = flipObjectPosition(position, flip);
-            img.style.objectPosition = finalPos;
+            // Use !important so Webflow variant CSS cannot override
+            img.style.setProperty('object-position', finalPos, 'important');
           }
         });
       });
