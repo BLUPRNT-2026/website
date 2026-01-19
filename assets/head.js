@@ -368,19 +368,24 @@ document.addEventListener("DOMContentLoaded", () => {
         const images = container.tagName === 'IMG' ? [container] : container.querySelectorAll('img');
 
         images.forEach(function (img) {
-          // object-fit
-          if (fitValue && fitValue !== '' && fitValue.indexOf('{') === -1) {
-            if (['fill', 'contain', 'cover', 'none', 'scale-down'].indexOf(fitValue) !== -1) {
-              img.style.objectFit = fitValue;
+          // 1) Werte auflösen: IMG > Container
+          const fit = img.getAttribute('data-fit') ?? fitValue;
+          const position = img.getAttribute('data-position') ?? positionValue;
+          const flip = img.getAttribute('data-flip') ?? flipValue;
+
+          // 2) object-fit
+          if (fit && fit !== '' && fit.indexOf('{') === -1) {
+            if (['fill', 'contain', 'cover', 'none', 'scale-down'].indexOf(fit) !== -1) {
+              img.style.objectFit = fit;
             }
           }
 
-          // flip (transform)
-          applyFlipTransform(img, flipValue);
+          // 3) flip (transform)
+          applyFlipTransform(img, flip);
 
-          // object-position (mirror it when flipped, so the VISUAL position stays the same)
-          if (positionValue && positionValue !== '' && positionValue.indexOf('{') === -1) {
-            const finalPos = flipObjectPosition(positionValue, flipValue);
+          // 4) object-position (mirror it when flipped, so the VISUAL position stays the same)
+          if (position && position !== '' && position.indexOf('{') === -1) {
+            const finalPos = flipObjectPosition(position, flip);
             img.style.objectPosition = finalPos;
           }
         });
