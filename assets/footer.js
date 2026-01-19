@@ -518,6 +518,14 @@
         const btn = wrapper.querySelector('.lottie-toggle');
         const icon = btn?.querySelector('span');
 
+        // Ensure the icon is rendered via CSS (no emoji glyphs)
+        if (icon) {
+          icon.classList.add('lottie-icon');
+          icon.setAttribute('aria-hidden', 'true');
+          // Remove any emoji/text to avoid iOS/Safari replacements
+          icon.textContent = '';
+        }
+
         const src = wrapper.getAttribute('data-lottie-src');
         const noAnim = wrapper.getAttribute('data-no-anim') === 'true';
 
@@ -541,7 +549,8 @@
           let isPlaying = shouldAutoplay;
 
           const setUI = playing => {
-            icon.textContent = playing ? '⏸' : '▶';
+            // State is used by CSS to show Play/Pause icon
+            btn.dataset.state = playing ? 'playing' : 'paused';
             btn.setAttribute('aria-pressed', playing ? 'false' : 'true');
             btn.setAttribute('aria-label', playing ? 'Animation pausieren' : 'Animation abspielen');
           };

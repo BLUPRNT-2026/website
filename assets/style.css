@@ -75,6 +75,7 @@
     border: 1px solid rgba(0,0,0,.12);
     font-size: 14px;
     line-height: 1;
+    color: var(--almost-black);
     cursor: pointer;
     opacity: .9;
     transition: opacity .2s ease;
@@ -85,6 +86,38 @@
   }
   .lottie-wrapper[data-no-anim="true"] .lottie-toggle {
     display: none;
+  }
+
+  /* =========================================================
+     1c) LOTTIE – Icon (SVG via mask, no emoji)
+     - Uses currentColor (set on .lottie-toggle)
+  ========================================================= */
+  .lottie-icon {
+    width: 14px;
+    height: 14px;
+    display: block;
+    background-color: currentColor;
+
+    /* Safari/iOS needs -webkit-mask-* */
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+  }
+
+  /* Default (if state is missing): show Pause (playing) */
+  .lottie-toggle .lottie-icon,
+  .lottie-toggle[data-state="playing"] .lottie-icon {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='4' width='4' height='16'/%3E%3Crect x='14' y='4' width='4' height='16'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='4' width='4' height='16'/%3E%3Crect x='14' y='4' width='4' height='16'/%3E%3C/svg%3E");
+  }
+
+  .lottie-toggle[data-state="paused"] .lottie-icon {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,5 19,12 8,19'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpolygon points='8,5 19,12 8,19'/%3E%3C/svg%3E");
   }
 
   /* =========================================================
