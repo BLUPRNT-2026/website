@@ -1,0 +1,835 @@
+<!--
+  =========================================================
+  HEAD CUSTOM CSS – Übersicht
+    0) Consent Pro – Google Analytics (managed)
+    1) Lottie layout & controls
+    2) Counter
+    3) Logo wall
+    4) Textarea resizer
+    5) Checkbox styling
+    6) Slider nav tweaks
+    7) Tabs expandable behavior
+    8) Tab-card image overrides (Tablet/Mobile)
+    9) Image container stabilization (Tablet/Mobile)
+   10) Richtext & images
+   11) Masonry grid
+   12) Typography & lists
+   13) Contact list override
+   14) Form placeholder
+   15) Navigation current state
+  =========================================================
+-->
+<!-- =========================================================
+     CONSENT PRO – GOOGLE ANALYTICS
+     (Script is managed by Consent Pro)
+========================================================= -->
+
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-HT0ENM14TH" type="fs-consent" fs-consent-categories="analytics" fs-consent-scripttype="text/javascript"></script>
+
+<script type="fs-consent" fs-consent-categories="analytics" fs-consent-scripttype="text/javascript">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('set', 'developer_id.dZGVlNj', true);
+  gtag('js', new Date());
+  gtag('config', 'G-HT0ENM14TH');
+</script>
+
+<!-- =========================================================
+     LOTTIE-WEB (bodymovin) – required for lottie.loadAnimation
+     NOTE: Do NOT use async/defer here, because inline footer code may run before deferred scripts.
+========================================================= -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+
+<style>
+  /* =========================================================
+     1) LOTTIE – Layout & Container
+  ========================================================= */
+  .lottie-wrapper {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+  }
+  .lottie-container {
+    width: 100%;
+  }
+  .lottie-container svg {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: none !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    shape-rendering: geometricPrecision;
+    text-rendering: geometricPrecision;
+  }
+  /* Mobile: Lottie container custom code */
+  @media (max-width: 767px) {
+    .lottie-container-customcode {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-height: 25vh !important;
+    }
+  }
+
+  /* =========================================================
+     1b) LOTTIE – Toggle Button
+  ========================================================= */
+  .lottie-toggle {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.85);
+    border: 1px solid rgba(0,0,0,.12);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: .9;
+    transition: opacity .2s ease;
+  }
+  .lottie-toggle:hover,
+  .lottie-toggle:focus-visible {
+    opacity: 1;
+  }
+  .lottie-wrapper[data-no-anim="true"] .lottie-toggle {
+    display: none;
+  }
+
+  /* =========================================================
+     2) COUNTER – Zahl + Einheit stabil halten
+  ========================================================= */
+  [counter-wrapper] {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.15em;
+  }
+  [counter-element="number"] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    white-space: nowrap;
+  }
+  [counter="unit"] {
+    white-space: nowrap;
+  }
+
+  /* =========================================================
+     3) LOGO WALL
+  ========================================================= */
+  .logo-wall {
+    display: inline-block;
+    filter: grayscale(100%) saturate(0.8);
+    transform: translateZ(0) scale(1) !important;
+    transform-origin: center;
+    transition: filter 0.3s ease, transform 0.3s ease;
+    will-change: filter, transform;
+  }
+  .logo-wall:hover {
+    filter: grayscale(0%) saturate(1);
+    transform: translateZ(0) scale(1.04) !important;
+  }
+
+  /* =========================================================
+     4) TEXTAREA – Nur vertikal resizebar + Fake-Grip
+  ========================================================= */
+  textarea.text-field.is-growing {
+    resize: vertical !important;
+    background-repeat: no-repeat;
+    background-position: right 2px bottom 2px;
+    background-size: 14px 14px;
+    padding-right: calc(18px + 14px);
+    padding-bottom: calc(18px + 14px);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M6 13 L13 6' stroke='%23999999' stroke-width='1.5' stroke-linecap='round'/%3E%3Cpath d='M9 13 L13 9' stroke='%23999999' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  }
+  textarea.text-field.is-growing::-webkit-resizer {
+    opacity: 0;
+  }
+
+  /* =========================================================
+     5) CHECKBOX – Styling
+  ========================================================= */
+  .w-checkbox-input.checkbox,
+  .w-checkbox-input.w-checkbox-input {
+    width: 24px;
+    height: 24px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid var(--dark-gray);
+    border-radius: 6px;
+    background: white;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+  }
+  .w-checkbox-input.checkbox:hover,
+  .w-checkbox-input.w-checkbox-input:hover {
+    border-color: #0404b8;
+  }
+  .w-checkbox-input.checkbox:checked,
+  .w-checkbox-input.w-checkbox-input:checked {
+    background-color: var(--human-blue);
+    border-color: var(--human-blue);
+  }
+  .w-checkbox-input.checkbox:checked:hover,
+  .w-checkbox-input.w-checkbox-input:checked:hover {
+    background-color: #0404b8;
+    border-color: #0404b8;
+  }
+  .w-checkbox-input.checkbox:checked::after,
+  .w-checkbox-input.w-checkbox-input:checked::after {
+    content: "";
+    width: 11px;
+    height: 7px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translateY(-1px);
+    transform-origin: center;
+    display: block;
+  }
+
+  /* =========================================================
+     6) SLIDER NAV – Tablet/Mobile Tweaks
+  ========================================================= */
+  @media screen and (max-width: 991px) {
+    .slider__nav.slider__nav--prev.w-slider-arrow-left {
+      left: 10px !important;
+      right: auto !important;
+    }
+    .slider__nav.slider__nav--prev {
+      margin-left: 0px;
+    }
+    .slider__nav.slider__nav--next.w-slider-arrow-right {
+      right: 10px !important;
+      left: auto !important;
+    }
+    .slider__nav.slider__nav--next {
+      margin-right: 0px;
+    }
+  }
+
+  /* =========================================================
+     7) TABS – Expandable Bottom
+  ========================================================= */
+  .w-tab-link .expandable-bottom {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      max-height 420ms ease,
+      opacity 280ms ease,
+      transform 280ms ease;
+    will-change: max-height, opacity, transform;
+  }
+  .w-tab-link.is-expanded .expandable-bottom {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* =========================================================
+     8) TAB-CARDS (mit Bild) – Tablet/Mobile: immer ausgeklappt
+  ========================================================= */
+  @media (max-width: 991px) {
+    .tab-card--image .expandable-bottom {
+      max-height: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+      overflow: visible !important;
+    }
+    .tab-card--image .expandable-bottom {
+      padding-left: 0 !important;
+    }
+    .tab-card--image .faq-animated-box {
+      display: none !important;
+    }
+    .tab-card--image.w-tab-link {
+      pointer-events: none !important;
+      cursor: default !important;
+    }
+    .tab-card--image.is-expanded .expandable-bottom,
+    .tab-card--image.w--current .expandable-bottom {
+      max-height: none !important;
+    }
+  }
+
+  /* =========================================================
+     9) TABS (Cards) – Bildcontainer stabilisieren (kein Jump)
+  ========================================================= */
+  @media (max-width: 991px) {
+    .tabs_content-cards.w-tab-content {
+      overflow: hidden;
+    }
+    .tabs_content-cards .tab_pane--cards.w-tab-pane {
+      height: 100%;
+    }
+    .tabs_content-cards .tab_image {
+      height: 100%;
+      width: 100%;
+    }
+    .tabs_content-cards .tab_image img {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+    .tabs_content-cards .tab_pane--cards.w-tab-pane {
+      transition-property: opacity !important;
+      transition-duration: 300ms !important;
+    }
+    .tabs_content-cards .tab_image {
+      overflow: hidden;
+    }
+    .tabs_content-cards .tab_image img {
+      contain: paint;
+      backface-visibility: hidden;
+      transform: translateZ(0);
+    }
+  }
+
+  /* =========================================================
+     10) RICHTTEXT & BILDER
+  ========================================================= */
+  figcaption {
+    font-size: 16px !important;
+    text-align: left !important;
+  }
+  .w-richtext figure.w-richtext-align-fullwidth {
+    text-align: left !important;
+  }
+  .w-richtext figure img {
+    border-radius: 40px !important;
+  }
+
+  /* =========================================================
+     11) MASONRY-GRID (Success-Seite)
+  ========================================================= */
+  .grid--masonry-succes {
+    column-count: 2;
+    column-gap: 40px;
+  }
+  .collection-item-masonry-succes {
+    break-inside: avoid;
+    margin-bottom: 40px;
+  }
+  @media screen and (max-width: 991px) {
+    .grid--masonry-succes {
+      column-count: 1;
+    }
+  }
+  @media screen and (max-width: 478px) {
+    .collection-item-masonry-succes {
+      margin-bottom: 20px;
+    }
+  }
+
+  /* =========================================================
+     12) TYPOGRAFIE & LISTEN
+  ========================================================= */
+  .h3 {
+    font-size: 20px !important;
+    font-family: var(--_text---serifenlos);
+    line-height: var(--_text---line-height-150);
+    font-weight: 500 !important;
+    text-align: left;
+  }
+  ul {
+    list-style: none !important;
+    padding-left: 0;
+    margin-left: 0;
+  }
+  ul li {
+    position: relative;
+    padding-left: 20px;
+  }
+  ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--human-blue);
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  /* =========================================================
+     13) CONTACT-LIST OVERRIDE
+  ========================================================= */
+  #contact-list {
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+  }
+  #contact-list li {
+    padding-left: 0;
+  }
+  #contact-list li::before {
+    content: none !important;
+  }
+
+  /* =========================================================
+     14) FORMULAR – Placeholder
+  ========================================================= */
+  .text-field::placeholder {
+    opacity: 1;
+  }
+
+  /* =========================================================
+     14b) A11Y – Screenreader-only Utility + Honeypot
+     - .sr-only: visually hidden but available to assistive tech
+     - .sr-only-honeypot: off-screen (better than display:none for some checkers)
+  ========================================================= */
+  .sr-only {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .sr-only-honeypot {
+    position: absolute !important;
+    left: -10000px !important;
+    top: auto !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+  }
+
+  /* =========================================================
+     15) NAVIGATION – Active State
+  ========================================================= */
+  .current {
+    color: var(--almost-black);
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-color: var(--almost-black);
+  }
+</style>
+
+
+
+<script>
+  
+
+
+/* =========================================================
+   2) SUBMIT BUTTON PROXY
+========================================================= */
+  
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector('[wf-submit-trigger="true"]')
+    ?.addEventListener("click", () => {
+      const submit = document.querySelector('input[type="submit"]');
+      if (!submit) return;
+
+      const form = submit.closest('form');
+      if (form) {
+        form.setAttribute('target', '_blank');
+      }
+
+      submit.click();
+    });
+});
+
+/* =========================================================
+   3) ENTER KEY BEHAVIOR
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('input[type="text"], input[type="email"]').forEach(input => {
+    input.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        input.blur();
+      }
+    });
+  });
+});
+
+
+
+/* =========================================================
+   4) COUNTER – Number Animation (FASTER) + UNIT ALWAYS VISIBLE
+========================================================= */
+
+(function () {
+  // schnelleres easing (weniger "ausrollen" am Ende)
+  const ease = t => 1 - Math.pow(1 - t, 3);
+
+  function animateNumber(el, target, duration, onComplete) {
+    let startTime, start = 0;
+
+    function step(ts) {
+      if (!startTime) startTime = ts;
+      const p = Math.min((ts - startTime) / duration, 1);
+      el.textContent = String(Math.round(start + (target - start) * ease(p)));
+
+      if (p < 1) requestAnimationFrame(step);
+      else {
+        el.textContent = String(target);
+        onComplete && onComplete();
+      }
+    }
+
+    requestAnimationFrame(step);
+  }
+
+  function parseNumber(el) {
+    const raw = (el.textContent || '').replace(/[^\d.-]/g, '');
+    const n = parseFloat(raw);
+    return isNaN(n) ? 0 : n;
+  }
+
+  function startCounter(el) {
+    if (!el || el.dataset.started) return;
+    el.dataset.started = 'true';
+
+    const target = parseNumber(el);
+
+    // Default schneller: 1200ms statt 2000ms
+    // weiterhin pro Element steuerbar: duration="900"
+    const duration = parseInt(el.getAttribute('duration'), 10) || 1200;
+
+    // Unit-Element finden
+    const unitEl =
+      el.closest('[counter-wrapper]')?.querySelector('[counter="unit"]') ||
+      el.parentElement?.querySelector('[counter="unit"]');
+
+    // ✅ Einheit sofort sichtbar lassen (falls irgendwo Styles dran hängen)
+    if (unitEl) {
+      unitEl.style.opacity = '1';
+      unitEl.style.transform = 'translateY(0)';
+      unitEl.style.willChange = '';
+    }
+
+    // ✅ zählen starten (ohne Fade-In am Ende)
+    animateNumber(el, target, duration);
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        startCounter(entry.target);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px 0px', threshold: 0.01 }); // etwas früher starten
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[counter-element="number"]').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      const inView = rect.top < window.innerHeight && rect.bottom > 0;
+
+      if (inView) startCounter(el);
+      else io.observe(el);
+
+      // ✅ Kein Verstecken der Unit mehr
+      // (Dieser Block war vorher dafür verantwortlich, dass die Einheit erst später erscheint.)
+    });
+  });
+
+  window.Webflow = window.Webflow || [];
+  window.Webflow.push(() => {
+    document.querySelectorAll('[counter-element="number"]').forEach(el => {
+      if (!el.dataset.started) {
+        const rect = el.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight && rect.bottom > 0;
+        if (inView) startCounter(el);
+      }
+    });
+  });
+})();
+
+
+
+/* =========================================================
+   6) FORMULAR-SICHERHEIT – Honeypot & Bot Protection
+========================================================= */
+
+document.addEventListener('DOMContentLoaded', function() {
+  const submit = document.querySelector("#contactSubmit");
+  const honeypotOne = document.querySelector("#FestnetzID");
+  const honeypotTwo = document.querySelector("#StadtID");
+  
+  if (!submit || !honeypotOne || !honeypotTwo) {
+    return;
+  }
+  
+  const form = submit.closest('form');
+  
+  if (!form) {
+    return;
+  }
+  
+  // Zeit-Tracking
+  let pageLoadTime = Date.now();
+  const minTime = 3000;
+  let formCanSubmit = false;
+  let attemptCount = 0;
+  const maxAttempts = 3;
+  
+  // Honeypot Check
+  function checkHoneypots() {
+    if (honeypotOne.value.length > 0 || honeypotTwo.value.length > 0) {
+      submit.disabled = true;
+    } else {
+      submit.disabled = false;
+    }
+  }
+  
+  honeypotOne.addEventListener('input', checkHoneypots);
+  honeypotTwo.addEventListener('input', checkHoneypots);
+  
+  // Time-Based Check
+  form.addEventListener('submit', function(e) {
+    // Wenn bereits validiert, durchlassen
+    if (formCanSubmit) {
+      return true;
+    }
+    
+    e.preventDefault();
+    e.stopPropagation();
+    
+    attemptCount++;
+    const timeSpent = Date.now() - pageLoadTime;
+    
+    // Check 1: Honeypot (immer blockieren, kein zweiter Versuch)
+    if (honeypotOne.value.length > 0 || honeypotTwo.value.length > 0) {
+      alert("Es ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu.");
+      submit.disabled = true;
+      return false;
+    }
+    
+    // Check 2: Zu viele Versuche? (Bot-Verhalten)
+    if (attemptCount > maxAttempts) {
+      alert("Zu viele Versuche. Bitte laden Sie die Seite neu.");
+      submit.disabled = true;
+      return false;
+    }
+    
+    // Check 3: Zu schnell?
+    if (timeSpent < minTime) {
+      // Timer zurücksetzen für nächsten Versuch
+      pageLoadTime = Date.now();
+      
+      alert("Bitte nehmen Sie sich einen Moment Zeit, um das Formular auszufüllen.");
+      return false;
+    }
+    
+    // Alle Checks bestanden!
+    formCanSubmit = true;
+    form.submit();
+    
+    return false;
+  });
+});
+/* =========================================================
+   7) CUSTOM PROPS – Dynamic SVG + Image Settings
+========================================================= */
+
+document.addEventListener('DOMContentLoaded', function() {
+  let isUpdating = false;
+  
+  function updateIcons() {
+    if (isUpdating) return;
+    isUpdating = true;
+    
+    document.querySelectorAll('[data-svg]').forEach(container => {
+      const svgCode = container.getAttribute('data-svg');
+      if (svgCode && !container.querySelector('svg')) {
+        container.innerHTML = svgCode;
+      }
+      
+      const svg = container.querySelector('svg');
+      if (svg) {
+        const computedStyle = window.getComputedStyle(container);
+        
+        const customSize = container.getAttribute('data-size');
+        const customColor = container.getAttribute('data-color');
+        const customStroke = container.getAttribute('data-stroke');
+        
+        const designerColor = computedStyle.color;
+        const designerStroke = parseFloat(computedStyle.borderWidth);
+        
+        const finalColor = customColor || designerColor || '#2e2d2c';
+        const finalStroke = customStroke || designerStroke || 1;
+        
+        if (customSize) {
+          container.style.width = customSize + 'px';
+          container.style.height = customSize + 'px';
+        }
+        
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        svg.setAttribute('stroke-linecap', 'round');
+        svg.setAttribute('stroke-linejoin', 'round');
+        
+        const rootHasStroke = svg.getAttribute('stroke') === 'currentColor';
+        const rootHasFill = svg.getAttribute('fill') === 'currentColor';
+        
+        if (rootHasStroke) {
+          svg.setAttribute('stroke', finalColor);
+          svg.setAttribute('stroke-width', finalStroke);
+          if (!svg.getAttribute('fill')) {
+            svg.setAttribute('fill', 'none');
+          }
+        }
+        if (rootHasFill) {
+          svg.setAttribute('fill', finalColor);
+        }
+        
+        const allElements = svg.querySelectorAll('*');
+        allElements.forEach(element => {
+          const elementStroke = element.getAttribute('stroke');
+          const elementFill = element.getAttribute('fill');
+          
+          if (elementStroke === 'currentColor') {
+            element.setAttribute('stroke', finalColor);
+            const currentWidth =
+              parseFloat(element.getAttribute('stroke-width') || svg.getAttribute('stroke-width') || 1);
+            element.setAttribute('stroke-width', String(finalStroke * currentWidth));
+            
+            if (!elementFill) {
+              element.setAttribute('fill', 'none');
+            }
+          }
+          
+          if (elementFill === 'currentColor') {
+            element.setAttribute('fill', finalColor);
+          }
+          
+          if (!elementStroke && !elementFill && rootHasStroke) {
+            element.setAttribute('stroke', finalColor);
+            element.setAttribute('fill', 'none');
+            const currentWidth =
+              parseFloat(element.getAttribute('stroke-width') || svg.getAttribute('stroke-width') || 1);
+            element.setAttribute('stroke-width', String(finalStroke * currentWidth));
+          }
+        });
+      }
+    });
+    
+    setTimeout(function() { isUpdating = false; }, 100);
+  }
+  
+  function updateImages() {
+    const imageContainers = document.querySelectorAll('[data-fit], [data-position]');
+    
+    imageContainers.forEach(function(container) {
+      const fitValue = container.getAttribute('data-fit');
+      const positionValue = container.getAttribute('data-position');
+      const images = container.tagName === 'IMG' ? [container] : container.querySelectorAll('img');
+      
+      images.forEach(function(img) {
+        if (fitValue && fitValue !== '' && fitValue.indexOf('{') === -1) {
+          if (['fill', 'contain', 'cover', 'none', 'scale-down'].indexOf(fitValue) !== -1) {
+            img.style.objectFit = fitValue;
+          }
+        }
+        
+        if (positionValue && positionValue !== '' && positionValue.indexOf('{') === -1) {
+          img.style.objectPosition = positionValue;
+        }
+      });
+    });
+  }
+  
+  function updateAll() {
+    updateIcons();
+    updateImages();
+  }
+  
+  updateAll();
+  
+  let timeout;
+  const observer = new MutationObserver(function() {
+    clearTimeout(timeout);
+    timeout = setTimeout(updateAll, 250);
+  });
+  
+  observer.observe(document.body, { 
+    attributes: true, 
+    childList: true,
+    subtree: true 
+  });
+});
+
+/* =========================================================
+   8) SMART NAVIGATION – Parent Highlight
+========================================================= */
+
+(function() {
+  const path = window.location.pathname;
+  
+  // Extrahiere ersten Teil der URL
+  const pathParts = path.split('/').filter(part => part);
+  const firstSegment = pathParts[0]; // z.B. "leistungen", "erfolge", "karriere"
+  
+  // Nur wenn wir auf einer Unterseite sind (mindestens 2 Segmente)
+  if (pathParts.length < 2) return;
+  
+  window.addEventListener('DOMContentLoaded', function() {
+    const navbar = document.querySelector('.navbar__nav');
+    if (!navbar) return;
+    
+    // 1. Checke erst Dropdowns
+    const dropdowns = navbar.querySelectorAll('.navbar__dropdown');
+    dropdowns.forEach(dropdown => {
+      const toggle = dropdown.querySelector('.navbar__dropdown-toggle');
+      const dropdownItems = dropdown.querySelectorAll('.navbar__dropdown-item');
+      
+      // Checke ob eines der Dropdown Items zur aktuellen URL passt
+      dropdownItems.forEach(item => {
+        if (item.href && item.href.includes(path)) {
+          toggle?.classList.add('w--current');
+        }
+      });
+    });
+    
+    // 2. Checke normale Nav-Links
+    const navLinks = navbar.querySelectorAll('.navbar__link');
+    navLinks.forEach(link => {
+      // Wenn Link-URL ein Prefix der aktuellen URL ist
+      if (link.href && path.includes(link.href.split('/').pop().replace('.html', ''))) {
+        link.classList.add('w--current');
+      }
+    });
+  });
+})();
+  
+  
+/* LOGIK: Höhe fixieren & Success anzeigen */
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const wrapper = document.getElementById("newsletter-wrapper");
+    const form = document.getElementById("cr-newsletter-form");
+    const success = document.getElementById("newsletter-success");
+
+    if (!wrapper || !form || !success) return;
+
+    form.addEventListener("submit", function () {
+      const height = form.offsetHeight;
+      wrapper.style.height = height + "px";
+
+      setTimeout(function () {
+        form.style.display = "none";
+        success.style.display = "flex";
+      }, 100);
+    });
+  });
+
+
+
+
+</script>
