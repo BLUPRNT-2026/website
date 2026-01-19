@@ -142,22 +142,20 @@
   ========================================================= */
 
   .logo-wall {
-    /* alles auf schwarz reduzieren */
+    /* default: einfarbig (almost black look) */
     filter: brightness(0) saturate(100%) !important;
-
-    /* visuelle Annäherung an var(--almost-black) */
     opacity: 0.85;
 
-    transform: translateZ(0) scale(1) !important;
+    transform: translateZ(0);
     transform-origin: center;
-    transition: none !important;
+    transition: filter 200ms ease, opacity 200ms ease, transform 200ms ease;
   }
 
-  /* kein Hover-Effekt */
   .logo-wall:hover {
-    filter: brightness(0) saturate(100%) !important;
-    opacity: 0.85;
-    transform: none !important;
+    /* hover: Originalfarben wieder zeigen */
+    filter: none !important;
+    opacity: 1;
+    transform: translateZ(0) scale(1.02);
   }
 
   /* =========================================================
