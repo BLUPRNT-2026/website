@@ -29,6 +29,60 @@
     if (window.location.pathname.includes('/karriere/')) {
       if (karriereLink) karriereLink.classList.add('current');
     }
+
+    /* =========================================================
+       A11Y – Header CTA Duplicate (Desktop vs Mobile)
+       Goal: Keep both buttons for layout, but ensure only ONE is focusable
+       and exposed to assistive tech at a time (WAVE redundancy).
+
+       Desktop CTA: .navbar__cta
+       Mobile CTA:  .navbar__cta-mobile (visible <=478px)
+    ========================================================= */
+    (function headerCtaA11yToggle() {
+      const mqMobile = window.matchMedia('(max-width: 478px)');
+
+      function setA11y(el, enabled) {
+        if (!el) return;
+        if (enabled) {
+          el.removeAttribute('aria-hidden');
+          el.removeAttribute('tabindex');
+          el.style.pointerEvents = '';
+        } else {
+          el.setAttribute('aria-hidden', 'true');
+          el.setAttribute('tabindex', '-1');
+          el.style.pointerEvents = 'none';
+        }
+      }
+
+      function apply() {
+        const desktopCta = document.querySelector('.navbar__cta');
+        const mobileCta = document.querySelector('.navbar__cta-mobile');
+
+        // Mobile viewport: mobile CTA is the real one; desktop CTA becomes inert
+        if (mqMobile.matches) {
+          setA11y(desktopCta, false);
+          setA11y(mobileCta, true);
+        } else {
+          setA11y(desktopCta, true);
+          setA11y(mobileCta, false);
+        }
+      }
+
+      apply();
+
+      // React to breakpoint changes
+      try {
+        mqMobile.addEventListener('change', apply);
+      } catch (_) {
+        mqMobile.addListener(apply);
+      }
+
+      // Webflow can re-render nav; re-apply a couple of times defensively
+      setTimeout(apply, 120);
+      setTimeout(apply, 350);
+      window.addEventListener('orientationchange', () => setTimeout(apply, 220), { passive: true });
+      window.addEventListener('pageshow', () => setTimeout(apply, 50));
+    })();
   });
 
   /* =========================================================
