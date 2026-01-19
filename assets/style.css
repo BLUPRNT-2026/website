@@ -28,8 +28,8 @@
       align-items: center;
 
       /* iOS Safari fix: enforce real height, not only max-height */
-      height: 25vh;
-      max-height: 25vh;
+      height: 40vh;
+      max-height: 40vh;
     }
 
     /* Prevent Webflow embed from collapsing */
