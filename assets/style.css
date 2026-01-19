@@ -138,26 +138,19 @@
   }
 
   /* =========================================================
-     LOGO WALL – Einheitliche Farbe: almost black
+     3) LOGO WALL
   ========================================================= */
-
   .logo-wall {
-    /* alles auf schwarz reduzieren */
-    filter: brightness(0) saturate(100%) !important;
-
-    /* visuelle Annäherung an var(--almost-black) */
-    opacity: 0.85;
-
+    display: inline-block;
+    filter: grayscale(100%) saturate(0.8);
     transform: translateZ(0) scale(1) !important;
     transform-origin: center;
-    transition: none !important;
+    transition: filter 0.3s ease, transform 0.3s ease;
+    will-change: filter, transform;
   }
-
-  /* kein Hover-Effekt */
   .logo-wall:hover {
-    filter: brightness(0) saturate(100%) !important;
-    opacity: 0.85;
-    transform: none !important;
+    filter: grayscale(0%) saturate(1);
+    transform: translateZ(0) scale(1.04) !important;
   }
 
   /* =========================================================
