@@ -299,22 +299,89 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     
     function updateImages() {
-      const imageContainers = document.querySelectorAll('[data-fit], [data-position]');
-      
-      imageContainers.forEach(function(container) {
+      const imageContainers = document.querySelectorAll('[data-fit], [data-position], [data-flip]');
+
+      // -------- Helpers --------
+      const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+
+      function flipPercentToken(token) {
+        // "20%" -> "80%" (clamped 0..100)
+        const m = String(token).trim().match(/^(-?\d+(?:\.\d+)?)%$/);
+        if (!m) return token;
+        const x = parseFloat(m[1]);
+        const flipped = clamp(100 - x, 0, 100);
+        return `${flipped}%`;
+      }
+
+      function normalizeObjectPosition(pos) {
+        // Ensure we always have 2 tokens: "center" -> "center center"
+        const tokens = String(pos).trim().split(/\s+/).filter(Boolean);
+        if (tokens.length === 0) return ['center', 'center'];
+        if (tokens.length === 1) return [tokens[0], 'center'];
+        return [tokens[0], tokens[1]];
+      }
+
+      function flipObjectPosition(pos, flipMode) {
+        if (!pos) return pos;
+
+        const mode = String(flipMode || '').toLowerCase().trim();
+        const flipH = mode === 'horizontal' || mode === 'both';
+        const flipV = mode === 'vertical' || mode === 'both';
+
+        let [x, y] = normalizeObjectPosition(pos);
+
+        if (flipH) {
+          if (x === 'left') x = 'right';
+          else if (x === 'right') x = 'left';
+          else x = flipPercentToken(x);
+        }
+
+        if (flipV) {
+          if (y === 'top') y = 'bottom';
+          else if (y === 'bottom') y = 'top';
+          else y = flipPercentToken(y);
+        }
+
+        return `${x} ${y}`;
+      }
+
+      function applyFlipTransform(img, flipMode) {
+        const mode = String(flipMode || '').toLowerCase().trim();
+
+        // If nothing set, remove transform to avoid fighting other styles
+        if (!mode) {
+          img.style.transform = '';
+          return;
+        }
+
+        if (mode === 'horizontal') img.style.transform = 'scaleX(-1)';
+        else if (mode === 'vertical') img.style.transform = 'scaleY(-1)';
+        else if (mode === 'both') img.style.transform = 'scale(-1, -1)';
+      }
+
+      // -------- Main --------
+      imageContainers.forEach(function (container) {
         const fitValue = container.getAttribute('data-fit');
         const positionValue = container.getAttribute('data-position');
+        const flipValue = container.getAttribute('data-flip');
+
         const images = container.tagName === 'IMG' ? [container] : container.querySelectorAll('img');
-        
-        images.forEach(function(img) {
+
+        images.forEach(function (img) {
+          // object-fit
           if (fitValue && fitValue !== '' && fitValue.indexOf('{') === -1) {
             if (['fill', 'contain', 'cover', 'none', 'scale-down'].indexOf(fitValue) !== -1) {
               img.style.objectFit = fitValue;
             }
           }
-          
+
+          // flip (transform)
+          applyFlipTransform(img, flipValue);
+
+          // object-position (mirror it when flipped, so the VISUAL position stays the same)
           if (positionValue && positionValue !== '' && positionValue.indexOf('{') === -1) {
-            img.style.objectPosition = positionValue;
+            const finalPos = flipObjectPosition(positionValue, flipValue);
+            img.style.objectPosition = finalPos;
           }
         });
       });
